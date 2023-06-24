@@ -5,36 +5,31 @@ open Falco.Routing
 open Falco.HostBuilder
 open Falco.Markup
 
+open SpotifyUtils
+open SpotifyAPI.Web
+
 let htmlHandler : HttpHandler =
-    let config = Configuration.GetSpotifyAppConfig
     let html =
         Elem.html [ Attr.lang "en" ] [
             Elem.head [] []
-            Elem.script [ Attr.src "/spotify.js"; Attr.type' "text/javascript" ] []
+            Elem.script [ Attr.src "https://unpkg.com/htmx.org@1.9.2"; Attr.integrity  "sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h"; Attr.crossorigin "anonymous" ] []
             Elem.body [] [
                 Elem.h1 [] [ Text.raw "Sample App" ]
-                Elem.p [] [Text.raw ("Client ID: " + config.spotify_client_id)]
-                Elem.button  [] [Text.raw "Login2"]
-                Elem.button [Attr.onclick "foo();" ] [Text.raw "Login"]
+                Elem.button [Attr.id "login"; Attr.create "hx-get" "/spotify/login"] [Text.raw "Login to Spotify"]
             ]
         ]
-
     Response.ofHtml html
 
-let login : HttpHandler =
-    let config = Configuration.GetSpotifyAppConfig
-    let token = Spotify.LogInApp config
-    Response.ofPlainText "token"
+let login =
+    let env = Configuration.GetSpotifyAppConfig
+    let token = getToken env
+    Response.ofPlainText token.AccessToken
 
-[<EntryPoint>]
-let main args =
-    webHost args {
-         use_static_files;
-
-        endpoints [
-            get "/" (Response.ofPlainText ("Hello world" ));
-            get "/spotify" htmlHandler
-            get "/spotify/login" htmlHandler
-        ]
-    }
-    0
+webHost [||]  {
+    use_static_files
+    endpoints [
+        get "/" (Response.ofPlainText ("Hello world" ));
+        get "/spotify" htmlHandler
+        get "/spotify/login" login
+    ]
+}
