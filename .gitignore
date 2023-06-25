@@ -259,3 +259,5 @@ MyProject_coverage.xml
 
 # Environment Files
 .env
+.vscode/launch.json
+.vscode/tasks.json
