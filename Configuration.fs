@@ -12,5 +12,7 @@ let GetSpotifyAppConfig : SpotifyAppConfig =
     let spotify_client_id = reader["spotify_client_id"];
     let spotify_client_secret = reader["spotify_client_secret"];
 
-    {spotify_client_id = spotify_client_id;
-    spotify_client_secret = spotify_client_secret}
+    {
+        spotify_client_id = spotify_client_id;
+        spotify_client_secret = spotify_client_secret
+    }
