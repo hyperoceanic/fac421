@@ -12,7 +12,6 @@
   <ItemGroup>
     <Compile Include="Configuration.fs" />
     <Compile Include="SpotifyUtils.fs" />
-    <Compile Include="main.fs" />
     <Compile Include="home.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
