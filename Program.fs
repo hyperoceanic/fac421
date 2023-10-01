@@ -1,22 +1,17 @@
-module fac421.Program
+module main
+
 open Falco
 open Falco.Routing
 open Falco.HostBuilder
 
-open Home
+open html
+open spotify
 
-let redirectHandler : HttpHandler  = fun ctx ->
+let homePageHandler : HttpHandler = fun ctx ->
+    Response.ofHtml homePage ctx
 
-    let query = Request.getQuery ctx
-    let code = query.GetString ("code", "dunno")
-    ctx.Response.Cookies.Append ("spotify_code", code)
-
-    Response.redirectTemporarily "/" ctx
-
-webHost [||]  {
-    use_static_files
+webHost [||] {
     endpoints [
         get "/" homePageHandler
-        get "/spotify/redirect" redirectHandler
-     ]
+    ]
 }

@@ -1,7 +1,12 @@
 module spotify
 
 open FsHttp
-let getSpotifyAuthToken =
+open FsHttp.Helper
+open System
+open System.Web
+open Microsoft.AspNetCore.WebUtilities
+open System.Text
+let foo =
     let result =
         http {
             GET @"https://reqres.in/api/users?page=2&delay=3"
@@ -11,11 +16,33 @@ let getSpotifyAuthToken =
         |> fun json -> json?page.ToString()
     result
 
+let getSpotifyAuthToken =
+    "Hello"
 
-// open SpotifyAPI.Web let getLoginURI =
-//     let env =  Configuration.GetSpotifyAppConfig
-//     let callbackUrl = Uri("https://localhost:5001/spotify/redirect")
-//     let scopes = [Scopes.PlaylistReadPrivate;  Scopes.PlaylistReadCollaborative] |> Array.ofSeq
+let getLoginURI =
+    let env = configuration.GetSpotifyAppConfig
+    let callbackUrl = "https://localhost:5001/spotify"
+    let scopes = HttpUtility.UrlEncode "playlist-read-private, playlist-read-collaborative"
+    let responseType = "code"
+    let builder = new StringBuilder ("https://accounts.spotify.com/authorize")
+    builder.Append $"?client_id={env.spotify_client_id}" |> ignore
+    builder.Append $"&scope={scopes}" |> ignore
+    builder.Append $"&response_type={responseType}" |> ignore
+    builder.Append $"&redirect_uri={callbackUrl}" |> ignore
+    builder.ToString()
+
+    // http {
+    //     GET authUrl
+    // }
+    // |> Request.send
+    // |> Response.toText
+
+
+//     let uriBuilder = UriBuilder callbackUrl
+//     QueryHelpers.AddQueryString()
+
+
+//     Url.combine()
 //     let request = LoginRequest( callbackUrl, env.spotify_client_id, LoginRequest.ResponseType.Code)
 //     request.Scope <- scopes
 //     request.ToUri()

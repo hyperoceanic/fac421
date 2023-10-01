@@ -1,7 +1,6 @@
-module Configuration
+module configuration
 
 open DotEnv.Core
-
 type SpotifyAppConfig = {
     spotify_client_id : string;
     spotify_client_secret: string
