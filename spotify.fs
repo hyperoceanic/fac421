@@ -24,11 +24,13 @@ let getLoginURI =
     let callbackUrl = "https://localhost:5001/spotify"
     let scopes = HttpUtility.UrlEncode "playlist-read-private, playlist-read-collaborative"
     let responseType = "code"
+    let showDialog = true
     let builder = new StringBuilder ("https://accounts.spotify.com/authorize")
     builder.Append $"?client_id={env.spotify_client_id}" |> ignore
     builder.Append $"&scope={scopes}" |> ignore
     builder.Append $"&response_type={responseType}" |> ignore
     builder.Append $"&redirect_uri={callbackUrl}" |> ignore
+    builder.Append $"&show_dialog={showDialog}" |> ignore
     builder.ToString()
 
     // http {
