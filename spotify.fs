@@ -1,55 +1,44 @@
 module spotify
-
-open FsHttp
-open FsHttp.Helper
 open System
 open System.Web
 open Microsoft.AspNetCore.WebUtilities
 open System.Text
-let foo =
-    let result =
-        http {
-            GET @"https://reqres.in/api/users?page=2&delay=3"
-        }
-        |> Request.send
-        |> Response.toJson
-        |> fun json -> json?page.ToString()
-    result
+open System.Net.Http
 
-let getSpotifyAuthToken =
-    "Hello"
-
-let getLoginURI =
-    let env = configuration.GetSpotifyAppConfig
+let getLoginURI spotifyClientId =
     let callbackUrl = "https://localhost:5001/spotify"
     let scopes = HttpUtility.UrlEncode "playlist-read-private, playlist-read-collaborative"
     let responseType = "code"
     let showDialog = true
     let builder = new StringBuilder ("https://accounts.spotify.com/authorize")
-    builder.Append $"?client_id={env.spotify_client_id}" |> ignore
+
+    builder.Append $"?client_id={spotifyClientId}" |> ignore
     builder.Append $"&scope={scopes}" |> ignore
     builder.Append $"&response_type={responseType}" |> ignore
     builder.Append $"&redirect_uri={callbackUrl}" |> ignore
     builder.Append $"&show_dialog={showDialog}" |> ignore
     builder.ToString()
 
-    // http {
-    //     GET authUrl
-    // }
-    // |> Request.send
-    // |> Response.toText
+let getAccessTokenM code =
+    let env = configuration.GetSpotifyAppConfig
+    let content =
+        {|
+            client_id = env.spotify_client_id
+            grant_type = "authorization_code"
+            code = code
+            redirect_uri = "https://localhost:5001/spotify"
+        |}
 
+    task {
+        use client = new HttpClient()
+        let target = "https://accounts.spotify.com/api/token"
 
-//     let uriBuilder = UriBuilder callbackUrl
-//     QueryHelpers.AddQueryString()
+        let response = Json.HttpClientJsonExtensions.PostAsJsonAsync(client, target, content)
+        return response
+    }
+    |> Async.AwaitTask
+    |> Async.RunSynchronously
 
-
-//     Url.combine()
-//     let request = LoginRequest( callbackUrl, env.spotify_client_id, LoginRequest.ResponseType.Code)
-//     request.Scope <- scopes
-//     request.ToUri()
-
-// /// Returns the access credentials for the web site
 
 
 // /// <summary>Log the user in and get back the user token</summary>

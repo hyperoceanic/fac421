@@ -17,11 +17,13 @@ let loginPage loginUrl =
         ]
     ]
 
-let spotifyPage =
+let spotifyPage code =
     Elem.html [ Attr.lang "en" ] [
         Elem.head [] []
         htmx
         Elem.body [] [
             Elem.h1 [] [ Text.raw "Fac 421 - logged in" ]
+            Elem.p [] [Text.raw $"The code is {code}"]
+
         ]
     ]
