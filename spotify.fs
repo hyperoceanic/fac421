@@ -15,14 +15,16 @@ let getLoginURI spotifyClientId =
     let scopes = HttpUtility.UrlEncode "playlist-read-private, playlist-read-collaborative"
     let responseType = "code"
     let showDialog = true
-    let builder = new StringBuilder ("https://accounts.spotify.com/authorize")
 
-    builder.Append $"?client_id={spotifyClientId}" |> ignore
-    builder.Append $"&scope={scopes}" |> ignore
-    builder.Append $"&response_type={responseType}" |> ignore
-    builder.Append $"&redirect_uri={callbackUri}" |> ignore
-    builder.Append $"&show_dialog={showDialog}" |> ignore
-    builder.ToString()
+    let ub = UriBuilder "https://accounts.spotify.com/authorize"
+    let query = HttpUtility.ParseQueryString(ub.Query)
+    query["client_id"] <- spotifyClientId
+    query["scope"] <- scopes
+    query["response_type"] <- responseType
+    query["redirect_uri"] <- callbackUri
+    query["show_dialog"] <- showDialog.ToString()
+
+    ub.ToString()
 
 let buildAuth clientId clientSecret =
     $"{clientId}:{clientSecret}"
