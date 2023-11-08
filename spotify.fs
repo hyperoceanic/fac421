@@ -4,9 +4,14 @@ open System.Web
 open Microsoft.AspNetCore.WebUtilities
 open System.Text
 open System.Net.Http
+open System.Text.Json
+open System.Text.Json.Serialization;
+open System.Collections.Generic
+open System.Net.Http.Headers
+
+let callbackUri = "https://localhost:5001/spotify"
 
 let getLoginURI spotifyClientId =
-    let callbackUrl = "https://localhost:5001/spotify"
     let scopes = HttpUtility.UrlEncode "playlist-read-private, playlist-read-collaborative"
     let responseType = "code"
     let showDialog = true
@@ -15,79 +20,32 @@ let getLoginURI spotifyClientId =
     builder.Append $"?client_id={spotifyClientId}" |> ignore
     builder.Append $"&scope={scopes}" |> ignore
     builder.Append $"&response_type={responseType}" |> ignore
-    builder.Append $"&redirect_uri={callbackUrl}" |> ignore
+    builder.Append $"&redirect_uri={callbackUri}" |> ignore
     builder.Append $"&show_dialog={showDialog}" |> ignore
     builder.ToString()
 
-let getAccessTokenM code =
-    let env = configuration.GetSpotifyAppConfig
-    let content =
-        {|
-            client_id = env.spotify_client_id
-            grant_type = "authorization_code"
-            code = code
-            redirect_uri = "https://localhost:5001/spotify"
-        |}
+let buildAuth clientId clientSecret =
+    $"{clientId}:{clientSecret}"
+    |> Encoding.UTF8.GetBytes
+    |> Convert.ToBase64String
+
+
+let getAccessTokenM (auth : string, code : string) =
+
+    let content = Dictionary<string, string>()
+    content.Add ("grant_type", "authorization_code")
+    content.Add ("code", code)
+    content.Add ("redirect_uri", callbackUri)
 
     task {
         use client = new HttpClient()
-        let target = "https://accounts.spotify.com/api/token"
+        client.DefaultRequestHeaders.Authorization <- AuthenticationHeaderValue ("Basic", auth)
 
-        let response = Json.HttpClientJsonExtensions.PostAsJsonAsync(client, target, content)
-        return response
+        let target = "https://accounts.spotify.com/api/token"
+        let httpContent = FormUrlEncodedContent content
+
+        let! response = client.PostAsync(target, httpContent)
+        return! response.Content.ReadAsStringAsync()
     }
     |> Async.AwaitTask
     |> Async.RunSynchronously
-
-
-
-// /// <summary>Log the user in and get back the user token</summary>
-// let getAuthToken env code =
-//     let client = OAuthClient()
-//     let originatingUri = Uri("https://localhost:5001/spotify/redirect")
-
-//     let request = AuthorizationCodeTokenRequest (
-//         env.spotify_client_id,
-//         env.spotify_client_secret,
-//         code,
-//         originatingUri
-//     )
-
-//     let getResponse () = async {
-//         let! response = client.RequestToken(request) |> Async.AwaitTask
-//         return response
-//      }
-
-//     let result = getResponse() |> Async.RunSynchronously
-//     result
-
-// let getSpotify (refreshHandler, spotify_code) =
-//     let env = GetSpotifyAppConfig
-//     let auth_response = getAuthToken env spotify_code
-
-//     let authenticator = AuthorizationCodeAuthenticator (
-//         env.spotify_client_id,
-//         env.spotify_client_secret,
-//         auth_response
-//     )
-
-//     Event.add refreshHandler authenticator.TokenRefreshed
-
-//     let config = SpotifyClientConfig
-//                     .CreateDefault()
-//                     .WithToken(auth_response.AccessToken)
-//                     .WithAuthenticator (authenticator)
-
-
-//     SpotifyClient(auth_response.AccessToken);
-
-// let getUserProfile (spotify : SpotifyClient) =
-//     async {
-//         return! spotify.UserProfile.Current() |> Async.AwaitTask
-//     } |> Async.RunSynchronously
-
-// let getPlayLists (spotify : SpotifyClient) =
-//     let request = PlaylistCurrentUsersRequest(Limit=5, Offset=0)
-//     async {
-//         return! spotify.Playlists.CurrentUsers(request) |> Async.AwaitTask
-//     } |> Async.RunSynchronously

@@ -17,9 +17,11 @@ let homePageHandler : HttpHandler = fun ctx ->
     Response.ofHtml page ctx
 
 let redirectPageHandler : HttpHandler = fun ctx ->
-    let code = ctx.Response.StatusCode
-    let accessToken = getAccessTokenM code
-    Response.ofHtml (spotifyPage code) ctx
+    let config = GetSpotifyAppConfig
+    let auth = buildAuth config.spotify_client_id config.spotify_client_secret
+    let code : string = ctx.Request.Query["code"][0]
+    let accessToken = getAccessTokenM (auth, code)
+    Response.ofHtml (spotifyPage accessToken) ctx
 
 webHost [||] {
     endpoints [
