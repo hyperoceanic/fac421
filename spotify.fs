@@ -12,17 +12,14 @@ open System.Net.Http.Headers
 let callbackUri = "https://localhost:5001/spotify"
 
 let getLoginURI spotifyClientId =
-    let scopes = HttpUtility.UrlEncode "playlist-read-private, playlist-read-collaborative"
-    let responseType = "code"
-    let showDialog = true
 
     let ub = UriBuilder "https://accounts.spotify.com/authorize"
     let query = HttpUtility.ParseQueryString(ub.Query)
     query["client_id"] <- spotifyClientId
-    query["scope"] <- scopes
-    query["response_type"] <- responseType
+    query["scope"] <-  HttpUtility.UrlEncode "playlist-read-private, playlist-read-collaborative"
+    query["response_type"] <- "code"
     query["redirect_uri"] <- callbackUri
-    query["show_dialog"] <- showDialog.ToString()
+    query["show_dialog"] <- true.ToString()
 
     ub.ToString()
 
