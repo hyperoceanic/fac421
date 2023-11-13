@@ -43,3 +43,18 @@ let getAccessTokenM (auth : string, code : string) =
     }
     |> Async.AwaitTask
     |> Async.RunSynchronously
+
+let getPlaylists accessToken =
+    let endpoint = "https://api.spotify.com/v1/me/playlists"
+    use client = new HttpClient()
+    client.DefaultRequestHeaders.Authorization <- AuthenticationHeaderValue ("Bearer", accessToken)
+
+    task {
+        let! response = client.GetAsync endpoint
+        return! response.Content.ReadAsStringAsync()
+    }
+    |> Async.AwaitTask
+    |> Async.RunSynchronously
+
+
+

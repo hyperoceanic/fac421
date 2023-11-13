@@ -18,12 +18,6 @@ let homePageHandler : HttpHandler = fun ctx ->
             |> loginPage
 
     Response.ofHtml page ctx
-
-let handlerWithHeader : HttpHandler =
-    Response.withCookie "greeted" "1"
-    >> Response.ofPlainText "Hello world"
-
-
 let redirectPageHandler : HttpHandler = fun ctx ->
     let config = GetSpotifyAppConfig
     let auth = buildAuth config.spotify_client_id config.spotify_client_secret
@@ -35,14 +29,29 @@ let redirectPageHandler : HttpHandler = fun ctx ->
 
     let page = spotifyPage access_token
 
-    let bar = Response.withCookie "access_token" access_token
-            >> Response.ofHtml page
+    let response = Response.withCookie "access_token" access_token
+                >> Response.ofHtml page
 
-    bar ctx
+    response ctx
+
+let playlistsHandler : HttpHandler = fun ctx ->
+    let config = GetSpotifyAppConfig
+    let auth = buildAuth config.spotify_client_id config.spotify_client_secret
+    let accessToken = ctx.Request.Cookies["access_token"]
+
+    let playlists  = getPlaylists accessToken
+
+    let fragment = playlistsFragment playlists
+
+    let response = Response.ofHtml fragment
+
+    response ctx
+
 
 webHost [||] {
     endpoints [
         get "/" homePageHandler
         get "/spotify" redirectPageHandler
+        get "/playlists" playlistsHandler
     ]
 }

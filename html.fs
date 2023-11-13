@@ -17,6 +17,12 @@ let loginPage loginUrl =
         ]
     ]
 
+let playlistsFragment content =
+    Elem.div [] [
+        Elem.h1 [] [ Text.raw "Playlists found" ]
+        Elem.p [] [Text.raw content]
+    ]
+
 let spotifyPage code =
     Elem.html [ Attr.lang "en" ] [
         Elem.head [] []
@@ -24,6 +30,13 @@ let spotifyPage code =
         Elem.body [] [
             Elem.h1 [] [ Text.raw "Fac 421 - logged in" ]
             Elem.p [] [Text.raw $"The code is {code}"]
+            Elem.div [] [
+                Elem.button [ Attr.create "hx-get" "/playlists"
+
+                ] [Text.raw "Playlists"]
+            ]
+
+
 
         ]
     ]
