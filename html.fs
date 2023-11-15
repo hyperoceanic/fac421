@@ -2,6 +2,7 @@ module html
 
 open Falco.Markup
 open HTMX
+open spotifyTypes
 
 let script_htmx =
     Elem.script [ Attr.src "https://unpkg.com/htmx.org@1.9.2";
@@ -18,10 +19,10 @@ let loginPage loginUrl =
         ]
     ]
 
-let playlistsFragment content =
+let playlistsFragment (playlists : PlayListResultProvider.PlayListResult) =
     Elem.div [] [
         Elem.h1 [] [ Text.raw "Playlists found" ]
-        Elem.p [] [Text.raw content]
+        Elem.p [] [Text.raw playlists.Href]
     ]
 
 let spotifyPage code =

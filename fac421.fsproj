@@ -8,6 +8,7 @@
     <PackageReference Include="FSharp.Data" Version="6.3.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="spotifyTypes.fs" />
     <Compile Include="htmx.fs" />
     <Compile Include="configuration.fs" />
     <Compile Include="cache.fs" />
@@ -15,4 +16,5 @@
     <Compile Include="html.fs" />
     <Compile Include="main.fs" />
   </ItemGroup>
+
 </Project>

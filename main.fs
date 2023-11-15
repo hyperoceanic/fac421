@@ -11,6 +11,8 @@ open System.Collections.Generic
 open System.Text.Json
 open System.Web
 
+open spotifyTypes
+
 let homePageHandler : HttpHandler = fun ctx ->
 
     let page = GetSpotifyAppConfig.spotify_client_id
@@ -39,7 +41,7 @@ let playlistsHandler : HttpHandler = fun ctx ->
     let auth = buildAuth config.spotify_client_id config.spotify_client_secret
     let accessToken = ctx.Request.Cookies["access_token"]
 
-    let playlists  = getPlaylists accessToken
+    let playlists = getPlaylists accessToken
 
     let fragment = playlistsFragment playlists
 
