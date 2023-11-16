@@ -19,10 +19,23 @@ let loginPage loginUrl =
         ]
     ]
 
+let getPlaylistFragment (item : PlayListResultProvider.PlayListResult) =
+    let z = item.Items[0]
+    Elem.div [] [Text.raw z.Name]
+
 let playlistsFragment (playlists : PlayListResultProvider.PlayListResult) =
+
+    let elemFrag (x : PlayListResultProvider.Item array) =
+        x |> Array.map (fun e -> Elem.p [] [Text.raw e.Name] )
+
+    let items = elemFrag playlists.Items
+                |> Array.toList
+
     Elem.div [] [
-        Elem.h1 [] [ Text.raw "Playlists found" ]
-        Elem.p [] [Text.raw playlists.Href]
+    Elem.h1 [] [ Text.raw "Playlists found" ]
+    Elem.p [] [Text.raw playlists.Href]
+    Elem.div [] items
+
     ]
 
 let spotifyPage code =
