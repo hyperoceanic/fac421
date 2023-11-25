@@ -6,7 +6,6 @@ open System.Net.Http
 open System.Collections.Generic
 open System.Net.Http.Headers
 
-open spotifyTypes
 
 let callbackUri = "https://localhost:5001/spotify"
 
@@ -54,11 +53,26 @@ let getPlaylists accessToken  =
     task {
         let! response = client.GetAsync endpoint
         let! payload = response.Content.ReadAsStringAsync()
-        let result  = PlayListResultProvider.Parse payload
-        return result
+        return spotifyTypes.getPlayLists payload
     }
     |> Async.AwaitTask
     |> Async.RunSynchronously
+
+
+let getPlaylist accessToken Id =
+    let endpoint = $"https://api.spotify.com/v1/playlists/{Id}"
+    use client = new HttpClient()
+
+    client.DefaultRequestHeaders.Authorization <- AuthenticationHeaderValue ("Bearer", accessToken)
+
+    task {
+        let! response = client.GetAsync endpoint
+        let! payload = response.Content.ReadAsStringAsync()
+        return spotifyTypes.getPlayList payload
+    }
+    |> Async.AwaitTask
+    |> Async.RunSynchronously
+
 
 
 

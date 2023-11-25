@@ -9,9 +9,7 @@ open html
 open spotify
 open System.Collections.Generic
 open System.Text.Json
-open System.Web
 
-open spotifyTypes
 
 let homePageHandler : HttpHandler = fun ctx ->
 
@@ -37,8 +35,8 @@ let redirectPageHandler : HttpHandler = fun ctx ->
     response ctx
 
 let playlistsHandler : HttpHandler = fun ctx ->
-    let config = GetSpotifyAppConfig
-    let auth = buildAuth config.spotify_client_id config.spotify_client_secret
+    // let config = GetSpotifyAppConfig
+    //let auth = buildAuth config.spotify_client_id config.spotify_client_secret
     let accessToken = ctx.Request.Cookies["access_token"]
 
     let playlists = getPlaylists accessToken
@@ -49,11 +47,24 @@ let playlistsHandler : HttpHandler = fun ctx ->
 
     response ctx
 
+let playlistHandler: HttpHandler =
+    fun ctx ->
+
+        let accessToken = ctx.Request.Cookies["access_token"]
+        let route = Request.getRoute ctx
+        let Id = route.GetString "Id"
+
+        let playList = getPlaylist accessToken Id
+        let fragment = html.playlist playList
+        let response = Response.ofHtml fragment
+
+        response ctx
 
 webHost [||] {
     endpoints [
         get "/" homePageHandler
         get "/spotify" redirectPageHandler
         get "/playlists" playlistsHandler
+        get "/playlist/{Id}" playlistHandler
     ]
 }

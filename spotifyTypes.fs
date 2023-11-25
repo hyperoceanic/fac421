@@ -2,7 +2,12 @@ module spotifyTypes
 
 open FSharp.Data
 
-type PlayListResultProvider = JsonProvider<"samples/playlist.json", RootName = "PlayListResult">
+type PlayListsTypes = JsonProvider<"samples/playlists.json">
 
-let getPlayListResult (payload:string)  =
-    PlayListResultProvider.Parse(payload)
+let getPlayLists payload =
+    PlayListsTypes.Parse payload
+
+type PlayListTypes = JsonProvider<"samples/playlist.json">
+
+let getPlayList payload =
+    PlayListTypes.Parse payload

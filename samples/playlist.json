@@ -1,1 +1,166 @@
-{ "href" : "https://api.spotify.com/v1/users/ym2bhisfifph3einwcw9fiuzs/playlists?offset=0&limit=20", "items" : [ { "collaborative" : false, "description" : "Psychedelic-leaning ambient/trance for coding.", "external_urls" : { "spotify" : "https://open.spotify.com/playlist/2ceXFEO7blxDBa5uhgazyf" }, "href" : "https://api.spotify.com/v1/playlists/2ceXFEO7blxDBa5uhgazyf", "id" : "2ceXFEO7blxDBa5uhgazyf", "images" : [ { "height" : null, "url" : "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb39dfff466b752590fba61fbc", "width" : null } ], "name" : "RabbitHole()", "owner" : { "display_name" : "adelessert", "external_urls" : { "spotify" : "https://open.spotify.com/user/adelessert" }, "href" : "https://api.spotify.com/v1/users/adelessert", "id" : "adelessert", "type" : "user", "uri" : "spotify:user:adelessert" }, "primary_color" : null, "public" : false, "snapshot_id" : "OTEsZGU5YzJkZWVlYzhmZTk3NTFkYjQyNTMyNzljMTRmNTY1ZTA3MGNiMg==", "tracks" : { "href" : "https://api.spotify.com/v1/playlists/2ceXFEO7blxDBa5uhgazyf/tracks", "total" : 52 }, "type" : "playlist", "uri" : "spotify:playlist:2ceXFEO7blxDBa5uhgazyf" }, { "collaborative" : false, "description" : "", "external_urls" : { "spotify" : "https://open.spotify.com/playlist/7EIV4fpOFKml1sMXp2htE3" }, "href" : "https://api.spotify.com/v1/playlists/7EIV4fpOFKml1sMXp2htE3", "id" : "7EIV4fpOFKml1sMXp2htE3", "images" : [ { "height" : 640, "url" : "https://i.scdn.co/image/ab67616d0000b273a346c9dedaa849e78368f2cf", "width" : 640 } ], "name" : "The Fall", "owner" : { "display_name" : "Mark.smith", "external_urls" : { "spotify" : "https://open.spotify.com/user/ym2bhisfifph3einwcw9fiuzs" }, "href" : "https://api.spotify.com/v1/users/ym2bhisfifph3einwcw9fiuzs", "id" : "ym2bhisfifph3einwcw9fiuzs", "type" : "user", "uri" : "spotify:user:ym2bhisfifph3einwcw9fiuzs" }, "primary_color" : null, "public" : true, "snapshot_id" : "MyxmYjkzMmE1MDNhOTI0MzIzZDE0NDA4ODNjMDU5NDQ0ODQ4MzYxMzBh", "tracks" : { "href" : "https://api.spotify.com/v1/playlists/7EIV4fpOFKml1sMXp2htE3/tracks", "total" : 1 }, "type" : "playlist", "uri" : "spotify:playlist:7EIV4fpOFKml1sMXp2htE3" }, { "collaborative" : false, "description" : "", "external_urls" : { "spotify" : "https://open.spotify.com/playlist/43Vse2c4grYDnRNhBg656q" }, "href" : "https://api.spotify.com/v1/playlists/43Vse2c4grYDnRNhBg656q", "id" : "43Vse2c4grYDnRNhBg656q", "images" : [ { "height" : 640, "url" : "https://mosaic.scdn.co/640/ab67616d0000b2734ca5af41b0ea26bf749379a9ab67616d0000b2739af4e501b6d8d8f1fd1f0372ab67616d0000b273a01eb7ed18ceb34293fc05d9ab67616d0000b273fe5c3cd3606e94bf0038d094", "width" : 640 }, { "height" : 300, "url" : "https://mosaic.scdn.co/300/ab67616d0000b2734ca5af41b0ea26bf749379a9ab67616d0000b2739af4e501b6d8d8f1fd1f0372ab67616d0000b273a01eb7ed18ceb34293fc05d9ab67616d0000b273fe5c3cd3606e94bf0038d094", "width" : 300 }, { "height" : 60, "url" : "https://mosaic.scdn.co/60/ab67616d0000b2734ca5af41b0ea26bf749379a9ab67616d0000b2739af4e501b6d8d8f1fd1f0372ab67616d0000b273a01eb7ed18ceb34293fc05d9ab67616d0000b273fe5c3cd3606e94bf0038d094", "width" : 60 } ], "name" : "David Byrne Radio Presents: Covered Up", "owner" : { "display_name" : "David Byrne", "external_urls" : { "spotify" : "https://open.spotify.com/user/hr5qs2k20kxvv4x149n5crxva" }, "href" : "https://api.spotify.com/v1/users/hr5qs2k20kxvv4x149n5crxva", "id" : "hr5qs2k20kxvv4x149n5crxva", "type" : "user", "uri" : "spotify:user:hr5qs2k20kxvv4x149n5crxva" }, "primary_color" : null, "public" : false, "snapshot_id" : "MzIsYTVjNjhiYjA3ODU5NDg1MGQxYmEyNmQ2NmVjNjExZTM5N2NhMjUwZQ==", "tracks" : { "href" : "https://api.spotify.com/v1/playlists/43Vse2c4grYDnRNhBg656q/tracks", "total" : 30 }, "type" : "playlist", "uri" : "spotify:playlist:43Vse2c4grYDnRNhBg656q" }, { "collaborative" : false, "description" : "", "external_urls" : { "spotify" : "https://open.spotify.com/playlist/1bB4yuphWXkLcEa7yhXfq3" }, "href" : "https://api.spotify.com/v1/playlists/1bB4yuphWXkLcEa7yhXfq3", "id" : "1bB4yuphWXkLcEa7yhXfq3", "images" : [ { "height" : 640, "url" : "https://i.scdn.co/image/ab67616d0000b27311cf818a6fb8819efbefe5e1", "width" : 640 } ], "name" : "Swans 2023", "owner" : { "display_name" : "Mark.smith", "external_urls" : { "spotify" : "https://open.spotify.com/user/ym2bhisfifph3einwcw9fiuzs" }, "href" : "https://api.spotify.com/v1/users/ym2bhisfifph3einwcw9fiuzs", "id" : "ym2bhisfifph3einwcw9fiuzs", "type" : "user", "uri" : "spotify:user:ym2bhisfifph3einwcw9fiuzs" }, "primary_color" : null, "public" : true, "snapshot_id" : "MTAsYTk5YWVlMjkwN2JlZTIyYTIwMWY3NzJhNjMyMjY4NWQ0NGUyMGRmYQ==", "tracks" : { "href" : "https://api.spotify.com/v1/playlists/1bB4yuphWXkLcEa7yhXfq3/tracks", "total" : 8 }, "type" : "playlist", "uri" : "spotify:playlist:1bB4yuphWXkLcEa7yhXfq3" }, { "collaborative" : false, "description" : "A never-ending mixtape. Music I love. New, old, rare. Started in 2014. Regular updates. I'm on Facebook, Twitter, Instagram, Spotify or at benwatt.com", "external_urls" : { "spotify" : "https://open.spotify.com/playlist/0inHe5mbRJoHBtPl8dWMYg" }, "href" : "https://api.spotify.com/v1/playlists/0inHe5mbRJoHBtPl8dWMYg", "id" : "0inHe5mbRJoHBtPl8dWMYg", "images" : [ { "height" : null, "url" : "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbd2886dcd04c3f6753b4e21f6", "width" : null } ], "name" : "Ben Watt's SpinCycle", "owner" : { "display_name" : "Ben Watt", "external_urls" : { "spotify" : "https://open.spotify.com/user/benwatt" }, "href" : "https://api.spotify.com/v1/users/benwatt", "id" : "benwatt", "type" : "user", "uri" : "spotify:user:benwatt" }, "primary_color" : null, "public" : false, "snapshot_id" : "MTUxOCw3MTg2MjdmMTJlODVhYTY0MDk4ZTQ0ODg5ZWVjZWY0YjI2ZGYyMWQw", "tracks" : { "href" : "https://api.spotify.com/v1/playlists/0inHe5mbRJoHBtPl8dWMYg/tracks", "total" : 1464 }, "type" : "playlist", "uri" : "spotify:playlist:0inHe5mbRJoHBtPl8dWMYg" }, { "collaborative" : false, "description" : "", "external_urls" : { "spotify" : "https://open.spotify.com/playlist/723ecguFTWeNtnarXF58IL" }, "href" : "https://api.spotify.com/v1/playlists/723ecguFTWeNtnarXF58IL", "id" : "723ecguFTWeNtnarXF58IL", "images" : [ { "height" : 640, "url" : "https://mosaic.scdn.co/640/ab67616d0000b273151342a638e2af3cac9b5c5cab67616d0000b27357f627f712e7060d287dd732ab67616d0000b273a7d2baa04a56c87de579db69ab67616d0000b273d0578b6c0b35405fc1f66b99", "width" : 640 }, { "height" : 300, "url" : "https://mosaic.scdn.co/300/ab67616d0000b273151342a638e2af3cac9b5c5cab67616d0000b27357f627f712e7060d287dd732ab67616d0000b273a7d2baa04a56c87de579db69ab67616d0000b273d0578b6c0b35405fc1f66b99", "width" : 300 }, { "height" : 60, "url" : "https://mosaic.scdn.co/60/ab67616d0000b273151342a638e2af3cac9b5c5cab67616d0000b27357f627f712e7060d287dd732ab67616d0000b273a7d2baa04a56c87de579db69ab67616d0000b273d0578b6c0b35405fc1f66b99", "width" : 60 } ], "name" : "Running", "owner" : { "display_name" : "Mark.smith", "external_urls" : { "spotify" : "https://open.spotify.com/user/ym2bhisfifph3einwcw9fiuzs" }, "href" : "https://api.spotify.com/v1/users/ym2bhisfifph3einwcw9fiuzs", "id" : "ym2bhisfifph3einwcw9fiuzs", "type" : "user", "uri" : "spotify:user:ym2bhisfifph3einwcw9fiuzs" }, "primary_color" : null, "public" : true, "snapshot_id" : "MTQwLDE3ZTBiZmJiMzkwMDk3ZGY2ZmE3ZDQ0ZDJiZTQ0YTQyNjczNjdkYjE=", "tracks" : { "href" : "https://api.spotify.com/v1/playlists/723ecguFTWeNtnarXF58IL/tracks", "total" : 135 }, "type" : "playlist", "uri" : "spotify:playlist:723ecguFTWeNtnarXF58IL" } ], "limit" : 20, "next" : null, "offset" : 0, "previous" : null, "total" : 6 }
+{
+    "collaborative": false,
+    "description": "string",
+    "external_urls": {
+        "spotify": "string"
+    },
+    "followers": {
+        "href": "string",
+        "total": 0
+    },
+    "href": "string",
+    "id": "string",
+    "images": [
+        {
+            "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
+            "height": 300,
+            "width": 300
+        }
+    ],
+    "name": "string",
+    "owner": {
+        "external_urls": {
+            "spotify": "string"
+        },
+        "followers": {
+            "href": "string",
+            "total": 0
+        },
+        "href": "string",
+        "id": "string",
+        "type": "user",
+        "uri": "string",
+        "display_name": "string"
+    },
+    "public": false,
+    "snapshot_id": "string",
+    "tracks": {
+        "href": "https://api.spotify.com/v1/me/shows?offset=0&limit=20",
+        "limit": 20,
+        "next": "https://api.spotify.com/v1/me/shows?offset=1&limit=1",
+        "offset": 0,
+        "previous": "https://api.spotify.com/v1/me/shows?offset=1&limit=1",
+        "total": 4,
+        "items": [
+            {
+                "added_at": "string",
+                "added_by": {
+                    "external_urls": {
+                        "spotify": "string"
+                    },
+                    "followers": {
+                        "href": "string",
+                        "total": 0
+                    },
+                    "href": "string",
+                    "id": "string",
+                    "type": "user",
+                    "uri": "string"
+                },
+                "is_local": false,
+                "track": {
+                    "album": {
+                        "album_type": "compilation",
+                        "total_tracks": 9,
+                        "available_markets": [
+                            "CA",
+                            "BR",
+                            "IT"
+                        ],
+                        "external_urls": {
+                            "spotify": "string"
+                        },
+                        "href": "string",
+                        "id": "2up3OPMp9Tb4dAKM2erWXQ",
+                        "images": [
+                            {
+                                "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
+                                "height": 300,
+                                "width": 300
+                            }
+                        ],
+                        "name": "string",
+                        "release_date": "1981-12",
+                        "release_date_precision": "year",
+                        "restrictions": {
+                            "reason": "market"
+                        },
+                        "type": "album",
+                        "uri": "spotify:album:2up3OPMp9Tb4dAKM2erWXQ",
+                        "artists": [
+                            {
+                                "external_urls": {
+                                    "spotify": "string"
+                                },
+                                "href": "string",
+                                "id": "string",
+                                "name": "string",
+                                "type": "artist",
+                                "uri": "string"
+                            }
+                        ]
+                    },
+                    "artists": [
+                        {
+                            "external_urls": {
+                                "spotify": "string"
+                            },
+                            "followers": {
+                                "href": "string",
+                                "total": 0
+                            },
+                            "genres": [
+                                "Prog rock",
+                                "Grunge"
+                            ],
+                            "href": "string",
+                            "id": "string",
+                            "images": [
+                                {
+                                    "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
+                                    "height": 300,
+                                    "width": 300
+                                }
+                            ],
+                            "name": "string",
+                            "popularity": 0,
+                            "type": "artist",
+                            "uri": "string"
+                        }
+                    ],
+                    "available_markets": [
+                        "string"
+                    ],
+                    "disc_number": 0,
+                    "duration_ms": 0,
+                    "explicit": false,
+                    "external_ids": {
+                        "isrc": "string",
+                        "ean": "string",
+                        "upc": "string"
+                    },
+                    "external_urls": {
+                        "spotify": "string"
+                    },
+                    "href": "string",
+                    "id": "string",
+                    "is_playable": false,
+                    "linked_from": {
+                    },
+                    "restrictions": {
+                        "reason": "string"
+                    },
+                    "name": "string",
+                    "popularity": 0,
+                    "preview_url": "string",
+                    "track_number": 0,
+                    "type": "track",
+                    "uri": "string",
+                    "is_local": false
+                }
+            }
+        ]
+    },
+    "type": "string",
+    "uri": "string"
+}

@@ -19,10 +19,41 @@ let loginPage loginUrl =
         ]
     ]
 
-let playlistsFragment (playlists : PlayListResultProvider.PlayListResult) =
+let playlist (playlist : PlayListTypes.Root) =
+    Elem.div [] [
+         Elem.h3 [] [Text.raw playlist.Name]
+         Elem.div [Attr.id playlist.Id] [
+             Elem.p [] [Text.raw $"Tracks: {playlist.Tracks.Items.Length}"]
+        ]
+    ]
+
+let playList (playlist : PlayListsTypes.Item) =
+    Elem.div [] [
+        Elem.h3 [] [Text.raw playlist.Name]
+        Elem.div [Attr.id playlist.Id] [
+            Elem.button [
+                HX.get $"/playlist/{playlist.Id}";
+                HX.swap "outerHTML"
+
+            ] [Text.raw "Playlists"]
+        ]
+    ]
+
+let playlistsItem (playListsItem : spotifyTypes.PlayListsTypes.Item) =
+    Elem.div [HX.target "this" ] [
+        Elem.h3 [] [Text.raw playListsItem.Name]
+        Elem.div [  ] [
+            Elem.button [
+                HX.get $"/playlist/{playListsItem.Id}";
+                HX.swap "outerHTML"
+            ] [Text.raw "Playlists"]
+        ]
+    ]
+
+let playlistsFragment (playlists : spotifyTypes.PlayListsTypes.Root) =
 
     let items = playlists.Items
-                |> Array.map (fun e -> Elem.li [] [Text.raw e.Name] )
+                |> Array.map (fun e -> Elem.li [] [playlistsItem e] )
                 |> Array.toList
 
     Elem.div [] [
@@ -46,8 +77,5 @@ let spotifyPage code =
 
                 ] [Text.raw "Playlists"]
             ]
-
-
-
         ]
     ]
