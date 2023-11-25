@@ -19,11 +19,28 @@ let loginPage loginUrl =
         ]
     ]
 
+let albumView (album : PlayListTypes.Album) =
+    Elem.div [] [
+        Elem.p []  [Text.raw album.Name]
+        Elem.img [ Attr.src album.Images[0].Url; Attr.height "200" ]
+    ]
+
+let trackView (track : PlayListTypes.Item)  =
+    Elem.div [] [
+        Elem.div [] [ Text.raw $"{track.Track.Name} - {track.Track.Album.Name}"]
+        albumView track.Track.Album
+    ]
+
 let playlist (playlist : PlayListTypes.Root) =
+let tracks =
+    playlist.Tracks.Items |> Array.map (fun e -> trackView e) |> Array.toList
     Elem.div [] [
          Elem.h3 [] [Text.raw playlist.Name]
          Elem.div [Attr.id playlist.Id] [
              Elem.p [] [Text.raw $"Tracks: {playlist.Tracks.Items.Length}"]
+             Elem.ul [] (playlist.Tracks.Items
+                |> Array.map (fun e -> trackView e)
+                |> Array.toList)
         ]
     ]
 
