@@ -22,6 +22,14 @@ let loginPage loginUrl =
 let albumView (album : PlayListTypes.Album) =
     Elem.div [] [
         Elem.p []  [Text.raw album.Name]
+        Elem.div [HX.target "this" ] [
+        Elem.button [
+                HX.get $"/play/{album.Uri}";
+                HX.swap "outerHTML"
+
+            ] [Text.raw "Play Album"]        ]
+
+        Elem.a [Attr.href $"https://api.spotify.com/v1/me/player/play"] []
         Elem.img [ Attr.src album.Images[0].Url; Attr.height "200" ]
     ]
 
@@ -32,15 +40,13 @@ let trackView (track : PlayListTypes.Item)  =
     ]
 
 let playlist (playlist : PlayListTypes.Root) =
-let tracks =
+    let tracks =
     playlist.Tracks.Items |> Array.map (fun e -> trackView e) |> Array.toList
     Elem.div [] [
          Elem.h3 [] [Text.raw playlist.Name]
          Elem.div [Attr.id playlist.Id] [
              Elem.p [] [Text.raw $"Tracks: {playlist.Tracks.Items.Length}"]
-             Elem.ul [] (playlist.Tracks.Items
-                |> Array.map (fun e -> trackView e)
-                |> Array.toList)
+             Elem.ul [] tracks
         ]
     ]
 

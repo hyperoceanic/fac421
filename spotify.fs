@@ -1,11 +1,11 @@
 module spotify
 open System
+open System.Net.Http.Json
 open System.Web
 open System.Text
 open System.Net.Http
 open System.Collections.Generic
 open System.Net.Http.Headers
-
 
 let callbackUri = "https://localhost:5001/spotify"
 
@@ -14,7 +14,8 @@ let getLoginURI spotifyClientId =
     let ub = UriBuilder "https://accounts.spotify.com/authorize"
     let query = HttpUtility.ParseQueryString(ub.Query)
     query["client_id"] <- spotifyClientId
-    query["scope"] <- "playlist-read-private playlist-read-collaborative"
+    query["scope"] <-
+    "playlist-read-private playlist-read-collaborative user-read-playback-state user-modify-playback-state user-read-currently-playing"
     query["response_type"] <- "code"
     query["redirect_uri"] <- callbackUri
     query["show_dialog"] <- true.ToString()
@@ -73,6 +74,21 @@ let getPlaylist accessToken Id =
     |> Async.AwaitTask
     |> Async.RunSynchronously
 
+type Playable = {context_uri : string; position_ms : int}
 
+let playAlbum accessToken Id =
+    let endpoint = $"https://api.spotify.com/v1/me/player/play"
+    use client = new HttpClient()
 
+    client.DefaultRequestHeaders.Authorization <- AuthenticationHeaderValue("Bearer", accessToken)
+
+    let playable = {context_uri = Id; position_ms = 0 }
+    let jc = JsonContent.Create (playable)
+
+    task {
+        let! response = client.PutAsync (endpoint, jc)
+        return! response.Content.ReadAsStringAsync()
+    }
+    |> Async.AwaitTask
+    |> Async.RunSynchronously
 

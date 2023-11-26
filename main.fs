@@ -10,7 +10,6 @@ open spotify
 open System.Collections.Generic
 open System.Text.Json
 
-
 let homePageHandler : HttpHandler = fun ctx ->
 
     let page = GetSpotifyAppConfig.spotify_client_id
@@ -18,6 +17,7 @@ let homePageHandler : HttpHandler = fun ctx ->
             |> loginPage
 
     Response.ofHtml page ctx
+
 let redirectPageHandler : HttpHandler = fun ctx ->
     let config = GetSpotifyAppConfig
     let auth = buildAuth config.spotify_client_id config.spotify_client_secret
@@ -35,29 +35,29 @@ let redirectPageHandler : HttpHandler = fun ctx ->
     response ctx
 
 let playlistsHandler : HttpHandler = fun ctx ->
-    // let config = GetSpotifyAppConfig
-    //let auth = buildAuth config.spotify_client_id config.spotify_client_secret
     let accessToken = ctx.Request.Cookies["access_token"]
-
     let playlists = getPlaylists accessToken
-
     let fragment = playlistsFragment playlists
-
     let response = Response.ofHtml fragment
-
     response ctx
 
 let playlistHandler: HttpHandler =
     fun ctx ->
-
         let accessToken = ctx.Request.Cookies["access_token"]
         let route = Request.getRoute ctx
         let Id = route.GetString "Id"
-
         let playList = getPlaylist accessToken Id
         let fragment = html.playlist playList
         let response = Response.ofHtml fragment
+        response ctx
 
+let playAlbumHandler: HttpHandler =
+    fun ctx ->
+        let accessToken = ctx.Request.Cookies["access_token"]
+        let route = Request.getRoute ctx
+        let Id = route.GetString "Id"
+        let result = playAlbum accessToken Id
+        let response = Response.ofHtmlString "<p>OK</p>"
         response ctx
 
 webHost [||] {
@@ -66,5 +66,6 @@ webHost [||] {
         get "/spotify" redirectPageHandler
         get "/playlists" playlistsHandler
         get "/playlist/{Id}" playlistHandler
+        get "/play/{Id}" playAlbumHandler
     ]
 }
