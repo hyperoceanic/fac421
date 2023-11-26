@@ -40,8 +40,10 @@ let trackView (track : PlayListTypes.Item)  =
     ]
 
 let playlist (playlist : PlayListTypes.Root) =
-    let tracks =
-    playlist.Tracks.Items |> Array.map (fun e -> trackView e) |> Array.toList
+    let tracks = playlist.Tracks.Items
+                 |> Array.map (fun e -> trackView e)
+                 |> Array.toList
+
     Elem.div [] [
          Elem.h3 [] [Text.raw playlist.Name]
          Elem.div [Attr.id playlist.Id] [
