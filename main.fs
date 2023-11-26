@@ -1,5 +1,8 @@
 module fac421.Program
 
+open System.Net.Http
+open Microsoft.AspNetCore.Http
+
 open Falco
 open Falco.Routing
 open Falco.HostBuilder
@@ -12,19 +15,19 @@ open System.Text.Json
 
 let homePageHandler : HttpHandler = fun ctx ->
 
-    let page = GetSpotifyAppConfig.spotify_client_id
-            |> getLoginURI
-            |> loginPage
-
-    Response.ofHtml page ctx
+    let response = GetSpotifyAppConfig.spotify_client_id
+                |> getLoginURI
+                |> loginPage
+                |> Response.ofHtml
+    response ctx
 
 let redirectPageHandler : HttpHandler = fun ctx ->
     let config = GetSpotifyAppConfig
     let auth = buildAuth config.spotify_client_id config.spotify_client_secret
     let code : string = ctx.Request.Query["code"][0]
-    let payload = getAccessTokenM (auth, code)
+    let payload = requestAccessToken (auth, code)
 
-    let dict = JsonSerializer.Deserialize<Dictionary<string, obj>>payload
+    let dict = JsonSerializer.Deserialize<Dictionary<string, obj>> payload
     let access_token = dict["access_token"] |> string
 
     let page = spotifyPage access_token
@@ -34,38 +37,47 @@ let redirectPageHandler : HttpHandler = fun ctx ->
 
     response ctx
 
+let getAccessToken (ctx : HttpContext)  =
+    ctx.Request.Cookies["access_token"]
+
+let getRouteValue ctx key =
+    let route = Request.getRoute ctx
+    route.GetString key
+
+
 let devicesHandler : HttpHandler = fun ctx ->
-    let accessToken = ctx.Request.Cookies["access_token"]
-    let devices = getDevices accessToken
-    let fragment = devicesFragment devices
-    let response = Response.ofHtml fragment
+    let response = ctx
+                |> getAccessToken
+                |> getDevices
+                |> devicesFragment
+                |> Response.ofHtml
     response ctx
 
 let playlistsHandler : HttpHandler = fun ctx ->
-    let accessToken = ctx.Request.Cookies["access_token"]
-    let playlists = getPlaylists accessToken
-    let fragment = playlistsFragment playlists
-    let response = Response.ofHtml fragment
+    let response = ctx
+                |> getAccessToken
+                |> getPlaylists
+                |> playlistsFragment
+                |> Response.ofHtml
     response ctx
 
-let playlistHandler: HttpHandler =
-    fun ctx ->
-        let accessToken = ctx.Request.Cookies["access_token"]
-        let route = Request.getRoute ctx
-        let Id = route.GetString "Id"
-        let playList = getPlaylist accessToken Id
-        let fragment = html.playlist playList
-        let response = Response.ofHtml fragment
-        response ctx
+let playlistHandler: HttpHandler = fun ctx ->
+    let Id = getRouteValue ctx "Id"
+    let accessToken = getAccessToken ctx
 
-let playAlbumHandler: HttpHandler =
-    fun ctx ->
-        let accessToken = ctx.Request.Cookies["access_token"]
-        let route = Request.getRoute ctx
-        let Id = route.GetString "Id"
-        let result = playAlbum accessToken Id
-        let response = Response.ofHtmlString "<p>OK</p>"
-        response ctx
+    let response = (accessToken, Id)
+                 ||> getPlaylist
+                  |> html.playlistView
+                  |> Response.ofHtml
+    response ctx
+
+let playAlbumHandler: HttpHandler = fun ctx ->
+    let Id = getRouteValue ctx "Id"
+    let accessToken = getAccessToken ctx
+
+    let response = playAlbum accessToken Id
+                  |> Response.ofHtmlString
+    response ctx
 
 webHost [||] {
     endpoints [

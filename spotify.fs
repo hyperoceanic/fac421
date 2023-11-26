@@ -26,7 +26,7 @@ let buildAuth clientId clientSecret =
     |> Encoding.UTF8.GetBytes
     |> Convert.ToBase64String
 
-let getAccessTokenM (auth : string, code : string) =
+let requestAccessToken (auth : string, code : string) =
 
     let content = Dictionary<string, string>()
     content.Add ("grant_type", "authorization_code")

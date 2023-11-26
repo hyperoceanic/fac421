@@ -20,8 +20,10 @@ let loginPage loginUrl =
     ]
 
 let deviceFragment (device : spotifyTypes.DevicesTypes.Devicis) =
+     let isActive = if device.IsActive then "(Active)" else ""
+
      Elem.div [] [
-         Elem.p [] [Text.raw device.Name]
+         Elem.p [] [Text.raw $"{device.Name} - {device.Type} {isActive}" ]
      ]
 
 let devicesFragment (devices : spotifyTypes.DevicesTypes.Root) =
@@ -56,7 +58,7 @@ let trackView (track : PlayListTypes.Item)  =
         albumView track.Track.Album
     ]
 
-let playlist (playlist : PlayListTypes.Root) =
+let playlistView (playlist : PlayListTypes.Root) =
     let tracks = playlist.Tracks.Items
                  |> Array.map (fun e -> trackView e)
                  |> Array.toList
@@ -104,28 +106,32 @@ let playlistsFragment (playlists : spotifyTypes.PlayListsTypes.Root) =
     ]
 
 let spotifyPage code =
+    let devices =
+        Elem.div [Attr.id "devices"] [
+        Elem.button [
+            HX.get "/devices";
+            HX.target "#devices" ;
+            HX.swap "outerHTML"
+
+        ] [Text.raw "Load Devices"]
+    ]
+
+    let playlists =
+        Elem.div [Attr.id "playlists"] [
+            Elem.button [
+                HX.get "/playlists";
+                HX.target "#playlists" ;
+                HX.swap "outerHTML"
+
+            ] [Text.raw "load Playlists"]
+        ]
+
     Elem.html [ Attr.lang "en" ] [
         Elem.head [] []
         script_htmx
         Elem.body [] [
             Elem.h1 [] [ Text.raw "Fac 421 - logged in" ]
-            Elem.div [Attr.id "devices"] [
-                Elem.button [
-                    HX.get "/devices";
-                    HX.target "#devices" ;
-                    HX.swap "outerHTML"
-
-                ] [Text.raw "Devices"]
-            ]
-
-            Elem.p [] [Text.raw $"The code is {code}"]
-            Elem.div [Attr.id "playlists"] [
-                Elem.button [
-                    HX.get "/playlists";
-                    HX.target "#playlists" ;
-                    HX.swap "outerHTML"
-
-                ] [Text.raw "Playlists"]
-            ]
+            devices
+            playlists
         ]
     ]
