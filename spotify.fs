@@ -14,8 +14,7 @@ let getLoginURI spotifyClientId =
     let ub = UriBuilder "https://accounts.spotify.com/authorize"
     let query = HttpUtility.ParseQueryString(ub.Query)
     query["client_id"] <- spotifyClientId
-    query["scope"] <-
-    "playlist-read-private playlist-read-collaborative user-read-playback-state user-modify-playback-state user-read-currently-playing"
+    query["scope"] <- "playlist-read-private playlist-read-collaborative user-read-playback-state user-modify-playback-state user-read-currently-playing"
     query["response_type"] <- "code"
     query["redirect_uri"] <- callbackUri
     query["show_dialog"] <- true.ToString()
