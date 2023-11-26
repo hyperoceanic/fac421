@@ -11,3 +11,8 @@ type PlayListTypes = JsonProvider<"samples/playlist.json">
 
 let getPlayList payload =
     PlayListTypes.Parse payload
+
+type DevicesTypes = JsonProvider<"samples/devices.json">
+
+let getDevicesList payload =
+    DevicesTypes.Parse payload

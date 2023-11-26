@@ -19,6 +19,22 @@ let loginPage loginUrl =
         ]
     ]
 
+let deviceFragment (device : spotifyTypes.DevicesTypes.Devicis) =
+     Elem.div [] [
+         Elem.p [] [Text.raw device.Name]
+     ]
+
+let devicesFragment (devices : spotifyTypes.DevicesTypes.Root) =
+
+    let items = devices.Devices
+                |> Array.map (fun e -> Elem.li [] [deviceFragment e] )
+                |> Array.toList
+
+    Elem.div [] [
+        Elem.h1 [] [ Text.raw "Devices found" ]
+        Elem.ul [] items
+    ]
+
 let albumView (album : PlayListTypes.Album) =
     Elem.div [] [
         Elem.p []  [Text.raw album.Name]
@@ -27,7 +43,8 @@ let albumView (album : PlayListTypes.Album) =
                 HX.get $"/play/{album.Uri}";
                 HX.swap "outerHTML"
 
-            ] [Text.raw "Play Album"]        ]
+            ] [Text.raw "Play Album"]
+        ]
 
         Elem.a [Attr.href $"https://api.spotify.com/v1/me/player/play"] []
         Elem.img [ Attr.src album.Images[0].Url; Attr.height "200" ]
@@ -82,9 +99,8 @@ let playlistsFragment (playlists : spotifyTypes.PlayListsTypes.Root) =
                 |> Array.toList
 
     Elem.div [] [
-    Elem.h1 [] [ Text.raw "Playlists found" ]
-    Elem.ul [] items
-
+        Elem.h1 [] [ Text.raw "Playlists found" ]
+        Elem.ul [] items
     ]
 
 let spotifyPage code =
@@ -93,6 +109,15 @@ let spotifyPage code =
         script_htmx
         Elem.body [] [
             Elem.h1 [] [ Text.raw "Fac 421 - logged in" ]
+            Elem.div [Attr.id "devices"] [
+                Elem.button [
+                    HX.get "/devices";
+                    HX.target "#devices" ;
+                    HX.swap "outerHTML"
+
+                ] [Text.raw "Devices"]
+            ]
+
             Elem.p [] [Text.raw $"The code is {code}"]
             Elem.div [Attr.id "playlists"] [
                 Elem.button [

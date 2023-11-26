@@ -34,6 +34,13 @@ let redirectPageHandler : HttpHandler = fun ctx ->
 
     response ctx
 
+let devicesHandler : HttpHandler = fun ctx ->
+    let accessToken = ctx.Request.Cookies["access_token"]
+    let devices = getDevices accessToken
+    let fragment = devicesFragment devices
+    let response = Response.ofHtml fragment
+    response ctx
+
 let playlistsHandler : HttpHandler = fun ctx ->
     let accessToken = ctx.Request.Cookies["access_token"]
     let playlists = getPlaylists accessToken
@@ -64,6 +71,7 @@ webHost [||] {
     endpoints [
         get "/" homePageHandler
         get "/spotify" redirectPageHandler
+        get "/devices" devicesHandler
         get "/playlists" playlistsHandler
         get "/playlist/{Id}" playlistHandler
         get "/play/{Id}" playAlbumHandler
