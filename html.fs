@@ -39,22 +39,21 @@ let devicesFragment (devices : spotifyTypes.DevicesTypes.Root) =
 
 let albumView (album : PlayListTypes.Album) =
     Elem.div [] [
-        Elem.p []  [Text.raw album.Name]
         Elem.div [HX.target "this" ] [
         Elem.button [
                 HX.get $"/play/{album.Uri}";
                 HX.swap "outerHTML"
 
-            ] [Text.raw "Play Album"]
+            ] [Text.raw $"Play '{album.Artists[0].Name} - {album.Name}'"]
         ]
-
-        Elem.a [Attr.href $"https://api.spotify.com/v1/me/player/play"] []
-        Elem.img [ Attr.src album.Images[0].Url; Attr.height "200" ]
+        Elem.a [ HX.get $"/play/{album.Uri}"; Attr.title $"Play - '{album.Artists[0].Name} - {album.Name}'"] [
+        Elem.img [Attr.src album.Images[0].Url; Attr.height "200"; ]
+        ]
     ]
 
 let trackView (track : PlayListTypes.Item)  =
     Elem.div [] [
-        Elem.div [] [ Text.raw $"{track.Track.Name} - {track.Track.Album.Name}"]
+        Elem.div [] [ Text.raw $"{track.Track.Name} - {track.Track.Artists[0].Name}"]
         albumView track.Track.Album
     ]
 

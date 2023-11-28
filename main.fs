@@ -13,7 +13,7 @@ open spotify
 open System.Collections.Generic
 open System.Text.Json
 
-let homePageHandler : HttpHandler = fun ctx ->
+let HomePageHandler : HttpHandler = fun ctx ->
 
     let response = GetSpotifyAppConfig.spotify_client_id
                 |> getLoginURI
@@ -21,7 +21,7 @@ let homePageHandler : HttpHandler = fun ctx ->
                 |> Response.ofHtml
     response ctx
 
-let redirectPageHandler : HttpHandler = fun ctx ->
+let RedirectPageHandler : HttpHandler = fun ctx ->
     let config = GetSpotifyAppConfig
     let auth = buildAuth config.spotify_client_id config.spotify_client_secret
     let code : string = ctx.Request.Query["code"][0]
@@ -37,33 +37,32 @@ let redirectPageHandler : HttpHandler = fun ctx ->
 
     response ctx
 
-let getAccessToken (ctx : HttpContext)  =
+let AccessToken (ctx : HttpContext)  =
     ctx.Request.Cookies["access_token"]
 
-let getRouteValue ctx key =
+let RouteValue ctx key =
     let route = Request.getRoute ctx
     route.GetString key
 
-
-let devicesHandler : HttpHandler = fun ctx ->
+let DevicesHandler : HttpHandler = fun ctx ->
     let response = ctx
-                |> getAccessToken
+                |> AccessToken
                 |> getDevices
                 |> devicesFragment
                 |> Response.ofHtml
     response ctx
 
-let playlistsHandler : HttpHandler = fun ctx ->
+let PlaylistsHandler : HttpHandler = fun ctx ->
     let response = ctx
-                |> getAccessToken
+                |> AccessToken
                 |> getPlaylists
                 |> playlistsFragment
                 |> Response.ofHtml
     response ctx
 
-let playlistHandler: HttpHandler = fun ctx ->
-    let Id = getRouteValue ctx "Id"
-    let accessToken = getAccessToken ctx
+let PlaylistHandler: HttpHandler = fun ctx ->
+    let Id = RouteValue ctx "Id"
+    let accessToken = AccessToken ctx
 
     let response = (accessToken, Id)
                  ||> getPlaylist
@@ -71,9 +70,9 @@ let playlistHandler: HttpHandler = fun ctx ->
                   |> Response.ofHtml
     response ctx
 
-let playAlbumHandler: HttpHandler = fun ctx ->
-    let Id = getRouteValue ctx "Id"
-    let accessToken = getAccessToken ctx
+let PlayAlbumHandler: HttpHandler = fun ctx ->
+    let Id = RouteValue ctx "Id"
+    let accessToken = AccessToken ctx
 
     let response = playAlbum accessToken Id
                   |> Response.ofHtmlString
@@ -81,11 +80,11 @@ let playAlbumHandler: HttpHandler = fun ctx ->
 
 webHost [||] {
     endpoints [
-        get "/" homePageHandler
-        get "/spotify" redirectPageHandler
-        get "/devices" devicesHandler
-        get "/playlists" playlistsHandler
-        get "/playlist/{Id}" playlistHandler
-        get "/play/{Id}" playAlbumHandler
+        get "/" HomePageHandler
+        get "/spotify" RedirectPageHandler
+        get "/devices" DevicesHandler
+        get "/playlists" PlaylistsHandler
+        get "/playlist/{Id}" PlaylistHandler
+        get "/play/{Id}" PlayAlbumHandler
     ]
 }
