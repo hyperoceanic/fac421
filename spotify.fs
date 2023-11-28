@@ -11,20 +11,20 @@ let callbackUri = "https://localhost:5001/spotify"
 
 let getLoginURI spotifyClientId =
 
-    let ub = UriBuilder "https://accounts.spotify.com/authorize"
-    let query = HttpUtility.ParseQueryString(ub.Query)
+    let builder = UriBuilder "https://accounts.spotify.com/authorize"
+    let query = HttpUtility.ParseQueryString(builder.Query)
     query["client_id"] <- spotifyClientId
     query["scope"] <- "playlist-read-private playlist-read-collaborative user-read-playback-state user-modify-playback-state user-read-currently-playing"
     query["response_type"] <- "code"
     query["redirect_uri"] <- callbackUri
     query["show_dialog"] <- true.ToString()
 
-    $"{ub}?{query}"
+    $"{builder}?{query}"
 
 let buildAuth clientId clientSecret =
     $"{clientId}:{clientSecret}"
-    |> Encoding.UTF8.GetBytes
-    |> Convert.ToBase64String
+        |> Encoding.UTF8.GetBytes
+        |> Convert.ToBase64String
 
 let requestAccessToken (auth : string, code : string) =
 
