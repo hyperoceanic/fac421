@@ -9,10 +9,14 @@ let script_htmx =
     Attr.integrity "sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h";
     Attr.crossorigin "anonymous" ] []
 
+let styles =
+      Elem.link [Attr.rel "stylesheet"; Attr.href "https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"]
+
 let loginPage loginUrl =
     Elem.html [ Attr.lang "en" ] [
         Elem.head [] []
         script_htmx
+        styles
         Elem.body [] [
             Elem.h1 [] [ Text.raw "Fac 421" ]
             Elem.a [Attr.href loginUrl] [Text.raw "Login to Spotify"]
@@ -122,12 +126,13 @@ let spotifyPage code =
                 HX.target "#playlists" ;
                 HX.swap "outerHTML"
 
-            ] [Text.raw "load Playlists"]
+            ] [Text.raw "Get Playlists"]
         ]
 
     Elem.html [ Attr.lang "en" ] [
         Elem.head [] []
         script_htmx
+        styles
         Elem.body [] [
             Elem.h1 [] [ Text.raw "Fac 421 - logged in" ]
             devices

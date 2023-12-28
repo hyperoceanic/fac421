@@ -2,7 +2,7 @@
     "devices": [
         {
             "id": "string",
-            "is_active": false,
+            "is_active": true,
             "is_private_session": false,
             "is_restricted": false,
             "name": "Kitchen speaker",

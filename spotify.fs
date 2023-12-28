@@ -6,6 +6,7 @@ open System.Text
 open System.Net.Http
 open System.Collections.Generic
 open System.Net.Http.Headers
+open spotifyTypes
 
 let callbackUri = "https://localhost:5001/spotify"
 
@@ -28,10 +29,11 @@ let buildAuth clientId clientSecret =
 
 let requestAccessToken (auth : string, code : string) =
 
-    let content = Dictionary<string, string>()
-    content.Add ("grant_type", "authorization_code")
-    content.Add ("code", code)
-    content.Add ("redirect_uri", callbackUri)
+    let content = dict [
+        "grant_type", "authorization_code";
+        "code", code;
+        "redirect_uri", callbackUri
+    ]
 
     task {
         use client = new HttpClient()
@@ -95,11 +97,10 @@ let playAlbum accessToken Id =
 
     client.DefaultRequestHeaders.Authorization <- AuthenticationHeaderValue("Bearer", accessToken)
 
-    let playable = {context_uri = Id; position_ms = 0 }
-    let jc = JsonContent.Create (playable)
+    let jsonContent = JsonContent.Create {context_uri = Id; position_ms = 0 }
 
     task {
-        let! response = client.PutAsync (endpoint, jc)
+        let! response = client.PutAsync (endpoint, jsonContent)
         return! response.Content.ReadAsStringAsync()
     }
     |> Async.AwaitTask
