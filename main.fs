@@ -70,6 +70,16 @@ let PlaylistHandler: HttpHandler = fun ctx ->
                   |> Response.ofHtml
     response ctx
 
+let PlaylistAlbumsHandler: HttpHandler = fun ctx ->
+    let Id = RouteValue ctx "Id"
+    let accessToken = AccessToken ctx
+
+    let response = (accessToken, Id)
+                 ||> getPlaylist
+                  |> html.playlistAlbumsView
+                  |> Response.ofHtml
+    response ctx
+
 let PlayAlbumHandler: HttpHandler = fun ctx ->
     let Id = RouteValue ctx "Id"
     let accessToken = AccessToken ctx
@@ -85,6 +95,7 @@ webHost [||] {
         get "/devices" DevicesHandler
         get "/playlists" PlaylistsHandler
         get "/playlist/{Id}" PlaylistHandler
+        get "/playlistAlbums/{Id}" PlaylistAlbumsHandler
         get "/play/{Id}" PlayAlbumHandler
     ]
 }

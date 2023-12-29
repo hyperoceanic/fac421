@@ -17,7 +17,7 @@ let loginPage loginUrl =
         Elem.head [] []
         script_htmx
         styles
-        Elem.body [] [
+        Elem.body [Attr.class' "container-fluid"] [
             Elem.h1 [] [ Text.raw "Fac 421" ]
             Elem.a [Attr.href loginUrl] [Text.raw "Login to Spotify"]
         ]
@@ -42,7 +42,7 @@ let devicesFragment (devices : spotifyTypes.DevicesTypes.Root) =
     ]
 
 let albumView (album : PlayListTypes.Album) =
-    Elem.div [] [
+    Elem.article [] [
         Elem.div [HX.target "this" ] [
         Elem.button [
                 HX.get $"/play/{album.Uri}";
@@ -61,6 +61,21 @@ let trackView (track : PlayListTypes.Item)  =
         albumView track.Track.Album
     ]
 
+let playlistAlbumsView  (playlist : PlayListTypes.Root) =
+    let albums = playlist.Tracks.Items
+                 |> Array.toList
+                 |> List.map (fun x -> x.Track.Album)
+                 |> List.distinctBy (fun x -> x.Id)
+                 |> List.map (fun x -> albumView x)
+
+    Elem.div [] [
+         Elem.h3 [] [Text.raw $"{playlist.Name} Albums"]
+         Elem.div [Attr.id playlist.Id] [
+             Elem.p [] [Text.raw $"Tracks: {playlist.Tracks.Items.Length}"]
+             Elem.ul [] albums
+        ]
+    ]
+
 let playlistView (playlist : PlayListTypes.Root) =
     let tracks = playlist.Tracks.Items
                  |> Array.map (fun e -> trackView e)
@@ -75,7 +90,7 @@ let playlistView (playlist : PlayListTypes.Root) =
     ]
 
 let playList (playlist : PlayListsTypes.Item) =
-    Elem.div [] [
+    Elem.article [] [
         Elem.h3 [] [Text.raw playlist.Name]
         Elem.div [Attr.id playlist.Id] [
             Elem.button [
@@ -94,6 +109,11 @@ let playlistsItem (playListsItem : spotifyTypes.PlayListsTypes.Item) =
                 HX.get $"/playlist/{playListsItem.Id}";
                 HX.swap "outerHTML"
             ] [Text.raw "Playlists"]
+            Elem.button [
+                HX.get $"/playlistAlbums/{playListsItem.Id}";
+                HX.swap "outerHTML"
+            ] [Text.raw "Playlist Albums"]
+
         ]
     ]
 
@@ -133,7 +153,7 @@ let spotifyPage code =
         Elem.head [] []
         script_htmx
         styles
-        Elem.body [] [
+        Elem.body [Attr.class' "container-fluid"] [
             Elem.h1 [] [ Text.raw "Fac 421 - logged in" ]
             devices
             playlists
